@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Академія Добробут - Магістерська програма</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Цвета Академии Добробут */
+            --primary: #00AEEF; /* Фирменный голубой */
+            --secondary: #002B49; /* Темно-синий для акцентов и формы */
+            --bg-light: #F4FAFD; /* Светлый голубой фон */
+            --text: #333333;
+            --white: #FFFFFF;
+            --yellow: #FFCC00; /* Желтый для кнопки из примера */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--text); 
+            line-height: 1.6; 
+            background-color: var(--white);
+        }
+
+        /* Шапка */
+        header { 
+            background: var(--white); 
+            padding: 20px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { 
+            font-size: 24px; 
+            font-weight: 700; 
+            color: var(--secondary); 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .logo-icon { width: 35px; height: 35px; background: var(--primary); border-radius: 4px 15px 4px 15px; }
+        
+        .nav a { 
+            margin-left: 25px; 
+            text-decoration: none; 
+            color: var(--secondary); 
+            font-weight: 700; 
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav a:hover { color: var(--primary); }
+
+        /* Главный экран */
+        .hero { 
+            background: var(--bg-light); 
+            padding: 100px 5%; 
+            text-align: left; /* Как на скрине, текст слева */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .hero-text {
+            max-width: 600px;
+        }
+        .hero h1 { 
+            color: var(--secondary); 
+            margin-bottom: 20px; 
+            font-size: 38px; 
+            line-height: 1.3;
+        }
+        .hero p { 
+            margin-bottom: 40px; 
+            font-size: 16px; 
+        }
+        .btn { 
+            background: var(--secondary); 
+            color: var(--yellow); 
+            padding: 16px 35px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 700; 
+            border: none; 
+            cursor: pointer; 
+            display: inline-block; 
+            transition: background 0.3s;
+        }
+        .btn:hover { background: #00406b; }
+
+        /* Секции */
+        .section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; color: var(--secondary); margin-bottom: 50px; font-size: 32px; }
+        
+        /* Сетка преимуществ */
+        .grid-4 { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px; 
+        }
+        .card { 
+            background: var(--white); 
+            padding: 40px 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            text-align: center; 
+            border-bottom: 5px solid var(--primary); 
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { color: var(--secondary); margin-bottom: 15px; font-size: 20px;}
+
+        /* Списки */
+        .info-list { font-size: 18px; line-height: 2; list-style-type: none; }
+        .info-list li { margin-bottom: 15px; padding-left: 30px; position: relative; }
+        .info-list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+
+        /* --- ЛИПКАЯ КНОПКА СБОКУ --- */
+        .sticky-btn {
+            position: fixed;
+            right: 20px; /* Отступ от правого края */
+            top: 85%;
+            transform: translateY(-50%); 
+            background: var(--secondary);
+            color: var(--yellow);
+            padding: 15px 25px;
+            border-radius: 8px; /* Скруглены все углы */
+            z-index: 999;
+            cursor: pointer;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Равномерная тень */
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+        }
+        .sticky-btn:hover {
+            background: #00406b;
+            /* При наведении кнопка остается на месте по оси Y, но чуть-чуть увеличивается */
+            transform: translateY(-50%) scale(1.05); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- МОДАЛЬНОЕ ОКНО С ФОРМОЙ --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 43, 73, 0.8); /* Полупрозрачный фон Добробут */
+            display: none; /* Скрыто по умолчанию */
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.active { display: flex; } /* Класс для показа */
+        
+        .modal-content {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto; /* Скролл, если экран маленький */
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 35px;
+            color: var(--white);
+            cursor: pointer;
+            background: none; border: none;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+        .close-btn:hover { color: var(--yellow); }
+
+        .modal-content h3 { text-align: center; margin-bottom: 30px; color: var(--yellow); font-size: 20px;}
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        
+        label { margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+        input, textarea { 
+            padding: 12px; 
+            border: 1px solid rgba(255, 204, 0, 0.3); 
+            border-radius: 4px; 
+            font-family: inherit; 
+            background: var(--white);
+            color: var(--text);
+            font-size: 15px;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 5px rgba(255, 204, 0, 0.5); }
+        textarea { resize: vertical; min-height: 80px; }
+        
+        .required-text { color: #ff6b6b; font-size: 12px; margin-top: 5px; }
+        
+        .submit-btn { 
+            background: var(--white); 
+            color: var(--secondary); 
+            border: none; 
+            padding: 16px 40px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            width: 100%; 
+            transition: background 0.3s; 
+            margin-top: 10px;
+        }
+        .submit-btn:hover { background: var(--yellow); color: var(--secondary); }
+        .consent { font-size: 12px; text-align: center; margin: 20px 0; color: #a0c4d8; }
+
+        /* Подвал */
+        .footer { background: #001a2c; color: var(--white); text-align: center; padding: 40px 20px; }
+
+        /* Адаптив для мобилок */
+        @media (max-width: 768px) {
+           body { 
+                overflow-x: hidden; 
+                padding-bottom: 60px; /* Добавляем отступ внизу страницы, чтобы кнопка не перекрыла футер */
+            }
+            .form-row { flex-direction: column; gap: 0; }
+            .hero { 
+                padding: 40px 5% 40px; 
+                text-align: center; 
+                flex-direction: column; 
+            }
+            .hero h1 { 
+                font-size: 24px; 
+                word-break: break-word; 
+                hyphens: auto;
+            }
+            .nav { display: none; }
+            
+            /* 1. Полностью скрываем блок с картинкой на телефонах */
+            .hero-image { display: none; }
+
+            .modal-content { padding: 30px 20px; }
+            
+            /* 2. Фиксируем кнопку-полосу в самом низу экрана */
+            .sticky-btn { 
+                right: 0; 
+                left: 0;
+                top: auto; 
+                bottom: 0; 
+                width: 100%; /* Растягиваем на весь экран */
+                transform: none; 
+                padding: 18px; 
+                font-size: 14px; 
+                border-radius: 0; /* Убираем скругления, чтобы она слилась с краями */
+                box-shadow: 0 -4px 15px rgba(0,0,0,0.15); /* Тень падает вверх, отделяя кнопку от текста */
+                text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            Академія Добробут
+        </div>
+        <div class="nav">
+            <a href="#">Головна</a>
+            <a href="#about">Програма</a>
+            <a href="#audience">Викладачі</a>
+            <a href="#format">Формат</a>
+        </div>
+    </header>
+
+    <button class="sticky-btn open-modal">Форма для вступників</button>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Майбутнє не прогнозують — його проєктують ті, хто знає, навіщо. Знайди середовище своїх на магістерській програмі!</h1>
+            <p>Формуємо свідому та мислячу спільноту лідерів та управлінців для розвитку системи охорони здоров’я.</p>
+            <button class="btn open-modal">ФОРМА ДЛЯ ВСТУПНИКІВ</button>
+        </div>
+        <div class="hero-image" style="width: 400px; height: 400px; background: #e0f2fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa;">
+            [Місце для зображення]
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="grid-4">
+            <div class="card">
+                <h3>Учись і працюй одночасно</h3>
+                <p>Дворічна програма для тих, хто поєднує роботу і навчання</p>
+            </div>
+            <div class="card">
+                <h3>Будуй кар’єру</h3>
+                <p>Обирай з широкого спектра ролей управління у сфері охорони здоров’я</p>
+            </div>
+            <div class="card">
+                <h3>Будь серед однодумців</h3>
+                <p>Навчайся з тими, хто має схожі цінності та цілі</p>
+            </div>
+            <div class="card">
+                <h3>Стань частиною Добробут</h3>
+                <p>Приєднайся до спільноти одного з кращих закладів медичної освіти України</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="formModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModal">&times;</button>
+            <h3>Щоб отримати більше інформацію про вступ та стипендії, заповніть цю форму</h3>
+            
+            <form id="dobrobutForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Прізвище</label>
+                        <input type="text" name="lastName" required>
+                        <span class="required-text">Важливо заповнити це поле.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Ім'я</label>
+                        <input type="text" name="firstName" required>
+                        <span class="required-text">Важливо заповнити це поле.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label style="text-align: center;">Який досвід у сфері охорони здоров'я ви маєте?</label>
+                    <textarea name="experience" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label style="text-align: center;">Які проблеми у сфері охорони здоров'я ви плануєте вирішити після закінчення магістерської програми «Менеджмент в охороні здоров'я»?</label>
+                    <textarea name="problems" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Електронна адреса</label>
+                        <input type="email" name="email" required>
+                        <span class="required-text">Важливо заповнити це поле.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Номер телефону</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label style="text-align: center;">Якщо маєте додаткові питання, залиште їх тут, ми відповімо вам на електронну адресу, яку ви вказали вище:</label>
+                    <textarea name="questions"></textarea>
+                </div>
+
+                <div class="consent">
+                    Натискаючи на кнопку «Відправити» ви даєте згоду на обробку ваших персональних даних. <br>
+                    Дані будуть зберігатися та оброблятися відповідно до Закону України «Про захист персональних даних» (№2297-17)
+                </div>
+
+                <button type="submit" class="submit-btn">Відправити</button>
+                <div id="formStatus" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Академія Добробут. Усі права захищено.</p>
+    </footer>
+
+    <script>
+        // 1. Логика Модального окна
+        const modal = document.getElementById('formModal');
+        const openModalBtns = document.querySelectorAll('.open-modal');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        // Открытие по клику на любую кнопку с классом .open-modal
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Убираем скролл сайта
+            });
+        });
+
+        // Закрытие по крестику
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Возвращаем скролл
+        });
+
+        // Закрытие по клику вне окна формы (по темному фону)
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // 2. Логика отправки формы (Google Sheets)
+        const form = document.getElementById('dobrobutForm');
+        const statusDiv = document.getElementById('formStatus');
+        
+        // ВАЖНО: Встав сюда свой URL из Google Apps Script!
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbydwz_SKIp66nbkIfZ4CQeAW5Qk1eVisiYeB3RN8Rxsloc8zGQQuZbdM4Cv-KIlqelyyQ/exec'; 
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            statusDiv.innerText = "Відправка...";
+            statusDiv.style.color = "var(--yellow)";
+            
+            let formData = new FormData(form);
+            
+            fetch(scriptURL, { method: 'POST', body: formData})
+                .then(response => {
+                    statusDiv.innerText = "Дякуємо! Ваша заявка успішно надіслана.";
+                    statusDiv.style.color = "#4CAF50"; 
+                    form.reset();
+                    // Можно автоматически закрыть окно через 3 секунды:
+                    // setTimeout(() => modal.classList.remove('active'), 3000);
+                })
+                .catch(error => {
+                    statusDiv.innerText = "Сталася помилка. Спробуйте ще раз.";
+                    statusDiv.style.color = "#ff6b6b"; 
+                    console.error('Error!', error.message);
+                });
+        });
+    </script>
+</body>
+</html>
