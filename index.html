@@ -62,6 +62,18 @@
         }
         .nav a:hover { color: var(--primary); }
 
+
+        /* Задаем 3D-пространство для контейнера */
+        #heroTilt {
+            perspective: 1000px; 
+        }
+        
+        /* Плавность возврата картинки на место */
+        .tilt-img {
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform; /* Подсказка браузеру для оптимизации анимации */
+        }
+        
         /* Главный экран */
         .hero { 
             background: var(--bg-light); 
@@ -533,7 +545,7 @@
             <p>Отримайте сучасну магістерську освіту у сфері громадського здоров'я та працюйте як менеджери та управлінці у приватних, державних та міжнародних організаціях, які формують політики громадського здоров’я для цілих спільнот і країни. </p>
             <button class="btn open-modal">Отримати консультацію</button>
         </div>
-        <div class="hero-image">
+        <div class="hero-image" id="heroTilt">
             <img src="./img/hero-bg.png" alt="Магістерська програма Добробут" style="width: 400px; height: 400px; border-radius: 50%; object-fit: cover; box-shadow: 0 15px 35px rgba(0, 43, 73, 0.15);">
         </div>
     </section>
@@ -869,6 +881,47 @@
     </footer>
 
     <script>
+
+        // --- Эффект 3D Tilt для главной картинки ---
+        const tiltContainer = document.getElementById('heroTilt');
+        const tiltImage = document.querySelector('.tilt-img');
+
+        // Отслеживаем движение мыши внутри контейнера
+        tiltContainer.addEventListener('mousemove', (e) => {
+            // Получаем физические размеры и позицию элемента на экране
+            const rect = tiltContainer.getBoundingClientRect();
+            
+            // Находим координаты курсора относительно верхнего левого угла элемента
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Нормализуем координаты: переводим их в диапазон от -1 до 1
+            // (где 0 — это точный центр картинки)
+            const xPct = (x / rect.width - 0.5) * 2;
+            const yPct = (y / rect.height - 0.5) * 2;
+            
+            // Задаем максимальный угол наклона (20 градусов)
+            const maxTilt = 20; 
+            
+            // Вычисляем градусы по осям X и Y
+            // Y инвертируем, чтобы картинка наклонялась ЗА курсором, а не от него
+            const rotateX = yPct * -maxTilt; 
+            const rotateY = xPct * maxTilt;
+            
+            // Убираем плавный переход во время движения, чтобы картинка не "отставала" от мыши
+            tiltImage.style.transition = 'transform 0.1s ease-out';
+            
+            // Применяем 3D-поворот и слегка увеличиваем картинку (scale3d)
+            tiltImage.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+
+        // Когда курсор покидает картинку, возвращаем её в исходное положение
+        tiltContainer.addEventListener('mouseleave', () => {
+            // Возвращаем долгий transition для красивого плавного отскока
+            tiltImage.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            tiltImage.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+        
         // 1. Логика Модального окна
         const modal = document.getElementById('formModal');
         const openModalBtns = document.querySelectorAll('.open-modal');
