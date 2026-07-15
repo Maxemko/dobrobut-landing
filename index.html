@@ -773,16 +773,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label style="text-align: center;">Який досвід у сфері охорони здоров'я ви маєте?</label>
-                    <textarea name="experience" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label style="text-align: center;">Які проблеми у сфері охорони здоров'я ви плануєте вирішити після закінчення магістерської програми «Менеджмент в охороні здоров'я»?</label>
-                    <textarea name="problems" required></textarea>
-                </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label>Електронна адреса</label>
@@ -865,6 +855,15 @@
         </div>
     </section>
 
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content" style="max-width: 450px; text-align: center; padding: 50px 30px;">
+            <svg style="width: 70px; height: 70px; color: var(--yellow); margin-bottom: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 style="margin-bottom: 15px; font-size: 26px;">Дякуємо!</h3>
+            <p style="font-size: 16px; margin-bottom: 30px;">Ваша заявка успішно надіслана. Наші менеджери зв'яжуться з вами найближчим часом.</p>
+            <button class="btn" id="closeSuccessBtn" style="width: 100%;">ЗРОЗУМІЛО</button>
+        </div>
+    </div>
+    
     <footer class="footer">
         <p>© 2026 Академія Добробут. Усі права захищено.</p>
     </footer>
@@ -914,11 +913,22 @@
             
             fetch(scriptURL, { method: 'POST', body: formData})
                 .then(response => {
-                    statusDiv.innerText = "Дякуємо! Ваша заявка успішно надіслана.";
-                    statusDiv.style.color = "#4CAF50"; 
+                    // 1. Очищаем текст статуса и саму форму
+                    statusDiv.innerText = ""; 
                     form.reset();
-                    // Можно автоматически закрыть окно через 3 секунды:
-                    // setTimeout(() => modal.classList.remove('active'), 3000);
+                    
+                    // 2. Скрываем основное окно с формой
+                    modal.classList.remove('active');
+                    
+                    // 3. Показываем Pop-up окно успеха
+                    const successModal = document.getElementById('successModal');
+                    successModal.classList.add('active');
+                    
+                    // 4. Логика для кнопки "ЗРОЗУМІЛО" в окне успеха
+                    document.getElementById('closeSuccessBtn').addEventListener('click', () => {
+                        successModal.classList.remove('active');
+                        document.body.style.overflow = 'auto'; // Возвращаем скролл сайта
+                    });
                 })
                 .catch(error => {
                     statusDiv.innerText = "Сталася помилка. Спробуйте ще раз.";
