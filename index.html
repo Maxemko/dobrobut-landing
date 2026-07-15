@@ -17,6 +17,10 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
         
         body { 
             font-family: 'Montserrat', sans-serif; 
@@ -228,8 +232,241 @@
         /* Подвал */
         .footer { background: #001a2c; color: var(--white); text-align: center; padding: 40px 20px; }
 
+        /* --- Секція "Для кого програма" --- */
+        .audience-container {
+            display: flex;
+            gap: 40px;
+            align-items: stretch;
+        }
+        
+        .audience-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .audience-content {
+            flex: 1.5; /* Текстовий блок буде трохи ширшим за картинку */
+            background: var(--bg-light);
+            padding: 50px 40px;
+            border-radius: 12px;
+            position: relative; /* Для позиціонування кнопки */
+        }
+        
+        .audience-subtitle {
+            color: var(--primary);
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .audience-item {
+            margin-bottom: 25px;
+        }
+        
+        .audience-item h4 {
+            color: var(--secondary);
+            font-size: 18px;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .audience-item p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .audience-btn-wrapper {
+            display: flex;
+            justify-content: flex-end; /* Вирівнюємо кнопку по правому краю */
+            margin-top: 30px;
+        }
+
+        /* --- Акордеон "Структура програми" --- */
+        .accordion {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Відступ між блоками */
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            background-color: var(--secondary); /* Темно-синій фон */
+            color: var(--yellow); /* Жовтий текст */
+            padding: 20px 25px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            font-family: inherit;
+        }
+
+        /* Стиль для активного (відкритого) заголовка */
+        .accordion-header.active {
+            background-color: var(--bg-light); /* Світло-блакитний фон */
+            color: #d1a700; /* Трохи темніший жовтий для контрасту на світлому фоні */
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out; /* Плавна анімація випадання */
+            background-color: var(--white);
+            border-left: 1px solid var(--bg-light);
+            border-right: 1px solid var(--bg-light);
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .accordion-content p {
+            padding: 25px;
+            margin: 0;
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* --- Секція "Викладачі програми" --- */
+        .teachers-section {
+            background-color: var(--bg-light); /* Легкий блакитний фон для візуального розділення секцій */
+        }
+        
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px 30px; /* 50px по вертикалі, 30px по горизонталі */
+            margin-top: 40px;
+        }
+
+        .teacher-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .teacher-img {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover; /* Гарантує, що фотографії різних розмірів будуть ідеально обрізані під коло */
+            object-position: top;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0, 43, 73, 0.1);
+        }
+
+        .teacher-name {
+            color: var(--secondary);
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .teacher-desc {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* --- Секція "Контакти" --- */
+        .contacts-section {
+            background-color: var(--white);
+            border-top: 1px solid #e0f2fa; /* Легка лінія для відділення від попереднього блоку */
+        }
+        
+        .contacts-intro {
+            max-width: 800px;
+            margin-bottom: 50px;
+        }
+        
+        .contacts-intro p {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+        
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .contact-column h4 {
+            font-size: 18px;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        /* Жовте підкреслення як на макеті */
+        .contact-column h4::after {
+            content: '';
+            display: block;
+            width: 35px;
+            height: 2px;
+            background-color: var(--yellow);
+            margin-top: 12px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Стиль для іконок */
+        .contact-icon {
+            color: var(--yellow);
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            margin-top: 2px; /* Вирівнювання іконки по першому рядку тексту */
+        }
+        
+        /* Робимо телефони та пошту клікабельними */
+        .contact-item a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block; /* Щоб телефони стояли один під одним */
+            margin-bottom: 8px;
+        }
+        
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
         /* Адаптив для мобилок */
         @media (max-width: 768px) {
+
+            /* Адаптив для Контактів */
+            .contacts-grid {
+                grid-template-columns: 1fr; 
+                gap: 30px;
+            }
+
+            /* Додаємо адаптивність для сітки викладачів у мобільній версії */
+            .teachers-grid {
+                grid-template-columns: 1fr; /* Вибудовуємо в одну колонку */
+                gap: 40px;
+            }
+
+            /* Додай це всередину @media (max-width: 768px) */
+            .audience-container {
+                flex-direction: column;
+            }
+            .audience-content {
+                padding: 30px 20px;
+            }
+
             .grid-4 {
         grid-template-columns: 1fr;
                     }
@@ -279,20 +516,22 @@
             Академія Добробут
         </div>
         <div class="nav">
+            <!-- Символ # повертає на самий верх сторінки -->
             <a href="#">Головна</a>
+            <!-- Веде до секції з 4 картками (початок інформації про програму) -->
             <a href="#about">Програма</a>
-            <a href="#audience">Викладачі</a>
-            <a href="#format">Формат</a>
+            <!-- Веде до нової секції з фотографіями викладачів -->
+            <a href="#teachers">Викладачі</a>
         </div>
     </header>
 
-    <button class="sticky-btn open-modal">Форма для вступників</button>
+    <button class="sticky-btn open-modal">Отримати консультацію</button>
 
     <section class="hero">
         <div class="hero-text">
             <h1>Магістерська програма «Організація охорони здоров’я» Академії Добробут</h1>
             <p>Отримайте сучасну магістерську освіту у сфері громадського здоров'я та працюйте як менеджери та управлінці у приватних, державних та міжнародних організаціях, які формують політики громадського здоров’я для цілих спільнот і країни. </p>
-            <button class="btn open-modal">ФОРМА ДЛЯ ВСТУПНИКІВ</button>
+            <button class="btn open-modal">Отримати консультацію</button>
         </div>
         <div class="hero-image" style="width: 400px; height: 400px; background: #e0f2fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #aaa;">
             [Місце для зображення]
@@ -317,6 +556,201 @@
                 <h3>Переймати досвід у лідерів галузі</h3>
                 <p>провідних лікарів, менеджерів та експертів медичної мережі «Добробут»</p>
             </div>
+        </div>
+    </section>
+
+    <section id="audience" class="section">
+        <div class="audience-container">
+            
+            <div class="audience-image">
+                <div style="width: 100%; height: 100%; min-height: 450px; background: #e0f2fa; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #aaa; text-align: center;">
+                    [Місце для зображення<br>або 3D ілюстрації]
+                </div>
+            </div>
+
+            <div class="audience-content">
+                <div class="audience-subtitle">Для кого програма?</div>
+                
+                <div class="audience-item">
+                    <h4>1. Власники, керівники та топменеджери медичних закладів</h4>
+                    <p>Отримають сучасні інструменти управління системою охорони здоров'я, навчаться приймати рішення на основі даних, ефективно розвивати медичні організації та впроваджувати зміни.</p>
+                </div>
+                
+                <div class="audience-item">
+                    <h4>2. Лікарі та медичні працівники</h4>
+                    <p>Розвинуть управлінські та лідерські компетенції, зрозуміють, як працює система охорони здоров'я на різних рівнях, і підготуються до нових кар'єрних можливостей.</p>
+                </div>
+                
+                <div class="audience-item">
+                    <h4>3. Експерти, аналітики та фахівці з громадського здоров'я</h4>
+                    <p>Поглиблять знання в епідеміології, аналізі даних і розробці політик громадського здоров'я, щоб реалізовувати масштабні проєкти та зростати професійно.</p>
+                </div>
+                
+                <div class="audience-item">
+                    <h4>4. Представники державних установ і територіальних громад</h4>
+                    <p>Навчаться розробляти, впроваджувати та оцінювати рішення у сфері громадського здоров'я, ефективніше управляти змінами та працювати з доказовими даними при формуванні політик.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Секція: Структура програми -->
+    <section id="program-structure" class="section">
+        <h2 class="section-title">Теми програми</h2>
+        <div class="accordion">
+            
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 1. Епідеміологія, біостатистика та дослідницькі методи</button>
+                <div class="accordion-content">
+                    <p>Навчитеся працювати з медичними даними: збирати, аналізувати та інтерпретувати їх, використовувати інструменти біостатистики, працювати з eHealth і перетворювати великі масиви інформації на обґрунтовані управлінські рішення.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 2. Системи охорони здоров’я, політики та реформи</button>
+                <div class="accordion-content">
+                    <p>Зрозумієте, як працюють сучасні системи охорони здоров'я та як вони змінюються. Навчитеся розробляти політики й стратегії розвитку, взаємодіяти з державою та громадами, а також будувати ефективну мережу медичних послуг.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 3. Управління, економіка та фінансування охорони здоров’я</button>
+                <div class="accordion-content">
+                    <p>Опануєте економіку медичної галузі: навчитеся аналізувати фінансові моделі, планувати бюджети, розраховувати тарифи, оптимізувати витрати та приймати управлінські рішення на основі даних.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 4. Інфекційні хвороби у громадському здоров’ї</button>
+                <div class="accordion-content">
+                    <p>Отримаєте системне розуміння сучасних інфекційних загроз, принципів епідеміологічного нагляду, профілактики та реагування на спалахи інфекційних захворювань.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 5. Лідерство, комунікація та проєктний менеджмент</button>
+                <div class="accordion-content">
+                    <p>Навчитеся керувати командами та змінами, планувати й реалізовувати проєкти, залучати фінансування та будувати комунікацію, яка формує довіру й змінює поведінку людей.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 6. Управління ризиками, біобезпека та надзвичайні ситуації</button>
+                <div class="accordion-content">
+                    <p>Опануєте підходи до оцінки ризиків для здоров'я населення, планування реагування на епідемії, біологічні, екологічні та техногенні загрози, а також управління системою охорони здоров'я під час кризових ситуацій.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 7. Етика, право та освітня політика у сфері здоров’я</button>
+                <div class="accordion-content">
+                    <p>Розберетеся в етичних і правових засадах громадського здоров'я, медичному законодавстві та принципах формування освітніх політик. Навчитеся приймати рішення, що відповідають міжнародним стандартам і потребам суспільства.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 8. Якість та безпека екстреної медичної допомоги</button>
+                <div class="accordion-content">
+                    <p>Вивчите сучасні підходи до організації екстреної допомоги, управління маршрутом пацієнта, взаємодії служб та впровадження систем контролю якості й безпеки на догоспітальному та госпітальному етапах.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 9. Психічне здоров'я населення</button>
+                <div class="accordion-content">
+                    <p>Дізнаєтеся, як працюють сучасні системи підтримки психічного здоров'я, опануєте методи раннього виявлення психічних розладів на рівні громади та зрозумієте, як когнітивні особливості й стрес впливають на поведінку людей та прийняття рішень.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 10. Академічне письмо та наукова комунікація (англійською мовою)</button>
+                <div class="accordion-content">
+                    <p>Навчитеся писати наукові статті, грантові заявки та дослідницькі проєкти англійською мовою, презентувати результати власних досліджень і критично аналізувати міжнародну наукову літературу.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 11. Репродуктивне здоров’я та політики громадського здоров’я</button>
+                <div class="accordion-content">
+                    <p>Навчитеся аналізувати демографічні тенденції, розробляти програми профілактики, сексуальної освіти та планування сім'ї, а також адаптувати міжнародні практики до потреб українських громад.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Блок 12. Практика у сфері громадського здоров’я</button>
+                <div class="accordion-content">
+                    <p>Закріпите отримані знання під час практики в медичних установах, державних чи міжнародних організаціях або профільних проєктах. Завершальним етапом стане власне прикладне дослідження або стратегічний проєкт, який ви захистите як кваліфікаційну роботу.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Секція: Викладачі програми -->
+    <section id="teachers" class="section teachers-section">
+        <h2 class="section-title">Викладачі програми</h2>
+        <p style="text-align: center; max-width: 800px; margin: -30px auto 40px; font-size: 15px;">
+            На програмі викладатимуть кращі викладачі, гостьові спікери та експерти-практики, зокрема:
+        </p>
+
+        <div class="teachers-grid">
+            
+            <div class="teacher-card">
+                <img src="./img/kachurets.jpg" alt="Младена Качурець" class="teacher-img">
+                <h3 class="teacher-name">Младена Качурець</h3>
+                <p class="teacher-desc">заступниця міністра охорони здоров’я (2019), радниця в.о. міністра охорони здоров’я (2016-2019)</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/bulavinova.jpg" alt="Катерина Булавінова" class="teacher-img">
+                <h3 class="teacher-name">Катерина Булавінова</h3>
+                <p class="teacher-desc">лікарка-інфекціоніст, медична експертка Дитячого фонду ООН (ЮНІСЕФ)</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/naumova.jpg" alt="Наталія Наумова" class="teacher-img">
+                <h3 class="teacher-name">Наталія Наумова</h3>
+                <p class="teacher-desc">кандидатка біологічних наук, біохімікиня-аналітикиня, консультантка з РХП, медична наукова співробітниця Венеціанського інституту молекулярної медицини, онкологічного центру Гюстав Русі та Університету Париж Сакле.</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/voitenko.jpg" alt="Нана Войтенко" class="teacher-img">
+                <h3 class="teacher-name">Нана Войтенко</h3>
+                <p class="teacher-desc">докторка біологічних наук, нейробіологиня, професорка, ректорка Академії Добробут.</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/rykova.webp" alt="Станіслава Рикова" class="teacher-img">
+                <h3 class="teacher-name">Станіслава Рикова</h3>
+                <p class="teacher-desc">доцентка кафедри загальної медицини Академії Добробут, педіатриня, інфекціоністка, сімейна лікарка медичної мережі «Добробут».</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/marsh.jpg" alt="Генрі Марш" class="teacher-img">
+                <h3 class="teacher-name">Генрі Марш</h3>
+                <p class="teacher-desc">британський нейрохірург, піонер нейрохірургічної допомоги для України, почесний професор Академії Добробут.</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/danylov.png" alt="Сергій Данилов" class="teacher-img">
+                <h3 class="teacher-name">Сергій Данилов</h3>
+                <p class="teacher-desc">нейробіолог, співзасновник лабораторії нейромаркетингових досліджень Beehiveor Academy and R&D Labs, а також платформи ментального добробуту Anima.ua, доцент кафедри анестезіології та інтенсивної терапії Академії Добробут.</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/plechysta.webp" alt="Єлизавета Плечиста" class="teacher-img">
+                <h3 class="teacher-name">Єлизавета Плечиста</h3>
+                <p class="teacher-desc">анестезіологиня, завідувачка кафедри анестезіології та інтенсивної терапії Академії Добробут.</p>
+            </div>
+
+            <div class="teacher-card">
+                <img src="./img/lushtey.png" alt="Ольга Луштей" class="teacher-img">
+                <h3 class="teacher-name">Ольга Луштей</h3>
+                <p class="teacher-desc">HR-директорка медичної мережі «Добробут».</p>
+            </div>
+
         </div>
     </section>
 
@@ -376,6 +810,60 @@
             </form>
         </div>
     </div>
+
+    <!-- Секція: Контакти -->
+    <section id="contacts" class="section contacts-section">
+        
+        <!-- Вступний текст та кнопка -->
+        <div class="contacts-intro">
+            <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Контакти</h2>
+            <p>Якщо хочете дізнатися більше про програму та умови вступу, будь ласка, тисніть на кнопку «Отримати консультацію». Наші менеджери зв'яжуться з вами, щоби відповісти на всі питання.</p>
+            <!-- Використовуємо клас open-modal, щоб кнопка одразу відкривала нашу існуючу форму -->
+            <button class="btn open-modal">ОТРИМАТИ КОНСУЛЬТАЦІЮ</button> 
+        </div>
+
+        <!-- Сітка контактів -->
+        <div class="contacts-grid">
+            
+            <!-- Колонка 1: Телефони -->
+            <div class="contact-column">
+                <h4>Наші телефони</h4>
+                <div class="contact-item">
+                    <!-- SVG Іконка телефону -->
+                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    <div>
+                        <!-- Посилання tel: дозволяє дзвонити по кліку з телефону -->
+                        <a href="tel:+380673227578">+380 67 322 75 78</a>
+                        <a href="tel:+380671412124">+380 (67) 141 21 24</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Колонка 2: Електронна адреса -->
+            <div class="contact-column">
+                <h4>Електронна адреса</h4>
+                <div class="contact-item">
+                    <!-- SVG Іконка листа -->
+                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <div>
+                        <!-- Посилання mailto: автоматично відкриває поштову програму -->
+                        <a href="mailto:academy@dobrobut.ua">academy@dobrobut.ua</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Колонка 3: Адреса -->
+            <div class="contact-column">
+                <h4>Адреса Академії Добробут</h4>
+                <div class="contact-item">
+                    <!-- SVG Іконка геолокації -->
+                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>м. Київ, вул. Антоновича, 40</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <footer class="footer">
         <p>© 2026 Академія Добробут. Усі права захищено.</p>
@@ -437,6 +925,33 @@
                     statusDiv.style.color = "#ff6b6b"; 
                     console.error('Error!', error.message);
                 });
+        });
+
+        // 3. Логика Акордеона (Структура програми)
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                // Закриваємо всі інші відкриті вкладки (якщо потрібно, щоб була відкрита лише одна)
+                accordionHeaders.forEach(otherHeader => {
+                    if (otherHeader !== this && otherHeader.classList.contains('active')) {
+                        otherHeader.classList.remove('active');
+                        otherHeader.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+
+                // Перемикаємо поточну вкладку
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                
+                if (this.classList.contains('active')) {
+                    // Встановлюємо висоту відповідно до контенту
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    // Скидаємо висоту для закриття
+                    content.style.maxHeight = null;
+                }
+            });
         });
     </script>
 </body>
